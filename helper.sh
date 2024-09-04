@@ -10,16 +10,16 @@ docker_exec_by_label() {
     echo "Label:   $label"
     echo "Command: $command"
 
-    local container_ids=$(docker ps -q --filter "label=$label")
+    local container_names=$(docker ps --filter "label=$label" --format "{{.Names}}")
 
-    if [ -z "$container_ids" ]; then
+    if [ -z "$container_names" ]; then
         echo "No running containers found with label $label"
         return 1
     fi
 
-    for container_id in $container_ids; do
-        echo "Executing command in container: $container_id"
-        docker exec "$container_id" bash -c "$command"
+    for container_name in $container_names; do
+        echo "Executing command in container: $container_name"
+        docker exec "$container_name" bash -c "$command"
     done
 }
 
@@ -37,16 +37,16 @@ docker_copy_by_label() {
     echo "Source path:      $source_path"
     echo "Destination path: $destination_path"
 
-    local container_ids=$(docker ps -q --filter "label=$label")
+    local container_names=$(docker ps --filter "label=$label" --format "{{.Names}}")
 
-    if [ -z "$container_ids" ]; then
+    if [ -z "$container_names" ]; then
         echo "No running containers found with label $label"
         return 1
     fi
 
-    for container_id in $container_ids; do
-        echo "Copying $source_path to container $container_id:$destination_path"
-        docker cp "$source_path" "$container_id:$destination_path"
+    for container_name in $container_names; do
+        echo "Copying $source_path to container $container_name:$destination_path"
+        docker cp "$source_path" "$container_name:$destination_path"
     done
 }
 
@@ -60,15 +60,15 @@ docker_restart_by_label() {
     echo "Docker restart by label"
     echo "Label: $label"
 
-    local container_ids=$(docker ps -q --filter "label=$label")
+    local container_names=$(docker ps --filter "label=$label" --format "{{.Names}}")
 
-    if [ -z "$container_ids" ]; then
+    if [ -z "$container_names" ]; then
         echo "No running containers found with label $label"
         return 1
     fi
 
-    for container_id in $container_ids; do
-        echo "Restarting container: $container_id"
-        docker restart "$container_id"
+    for container_name in $container_names; do
+        echo "Restarting container: $container_name"
+        docker restart "$container_name"
     done
 }
