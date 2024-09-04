@@ -26,7 +26,7 @@ docker_exec_by_label() {
 
 docker_copy_by_label() {
     if [ "$#" -ne 4 ]; then
-        echo "Usage: docker_exec_by_label <label_key> <label_value> <source_path> <destination_path>"
+        echo "Usage: docker_copy_by_label <label_key> <label_value> <source_path> <destination_path>"
         return 1
     fi
 
@@ -52,3 +52,26 @@ docker_copy_by_label() {
     done
 }
 
+docker_restart_by_label() {
+    if [ "$#" -ne 2 ]; then
+        echo "Usage: docker_restart_by_label <label_key> <label_value>"
+        return 1
+    fi
+
+    local label_key=$1
+    local label_value=$2
+    echo "Docker restart by label"
+    echo "Label:            ${label_key}=${label_value}"
+
+    local container_ids=$(docker ps -q --filter "label=${label_key}=${label_value}")
+
+    if [ -z "$container_ids" ]; then
+        echo "No running containers found with label ${label_key}=${label_value}."
+        return 1
+    fi
+
+    for container_id in $container_ids; do
+        echo "Restarting container: ${container_id}"
+        docker restart "${container_id}"
+    done
+}
