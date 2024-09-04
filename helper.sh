@@ -13,7 +13,7 @@ docker_exec_by_label() {
     local label=$1
     local command=$2
     echo -e "$blue_arrow Docker exec command by label"
-    echo -e "$blue_arrow Label:   $label"
+    echo -e "$blue_arrow Label: $label"
     echo -e "$blue_arrow Command: $command"
 
     local container_names=$(docker ps --filter "label=$label" --format "{{.Names}}")
@@ -27,6 +27,8 @@ docker_exec_by_label() {
         echo -e "$purple_arrow Executing command in container: $container_name"
         docker exec "$container_name" bash -c "$command"
     done
+
+    echo -e "$green_arrow Done"
 }
 
 docker_copy_by_label() {
@@ -39,8 +41,8 @@ docker_copy_by_label() {
     local source_path=$2
     local destination_path=$3
     echo -e "$blue_arrow Docker copy file by label"
-    echo -e "$blue_arrow Label:            $label"
-    echo -e "$blue_arrow Source path:      $source_path"
+    echo -e "$blue_arrow Label: $label"
+    echo -e "$blue_arrow Source path: $source_path"
     echo -e "$blue_arrow Destination path: $destination_path"
 
     local container_names=$(docker ps --filter "label=$label" --format "{{.Names}}")
@@ -54,6 +56,8 @@ docker_copy_by_label() {
         echo -e "$purple_arrow Copying $source_path to container $container_name:$destination_path"
         docker cp "$source_path" "$container_name:$destination_path"
     done
+
+    echo -e "$green_arrow Done"
 }
 
 docker_restart_by_label() {
@@ -77,4 +81,6 @@ docker_restart_by_label() {
         echo -e "$purple_arrow Restarting container: $container_name"
         docker restart "$container_name"
     done
+
+    echo -e "$green_arrow Done"
 }
