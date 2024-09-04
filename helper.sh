@@ -13,7 +13,7 @@ docker_exec_by_label() {
     local container_ids=$(docker ps -q --filter "label=$label")
 
     if [ -z "$container_ids" ]; then
-        echo "No running containers found with label $label."
+        echo "No running containers found with label $label"
         return 1
     fi
 
@@ -40,7 +40,7 @@ docker_copy_by_label() {
     local container_ids=$(docker ps -q --filter "label=$label")
 
     if [ -z "$container_ids" ]; then
-        echo "No running containers found with label $label."
+        echo "No running containers found with label $label"
         return 1
     fi
 
@@ -63,7 +63,7 @@ docker_restart_by_label() {
     local container_ids=$(docker ps -q --filter "label=$label")
 
     if [ -z "$container_ids" ]; then
-        echo "No running containers found with label $label."
+        echo "No running containers found with label $label"
         return 1
     fi
 
