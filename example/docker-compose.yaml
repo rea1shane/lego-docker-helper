@@ -16,3 +16,9 @@ services:
     container_name: example-traefik
     labels:
       - helper.docker.lego.discovery.domain=foo.bar
+
+  traefik2:
+    image: traefik
+    container_name: example-traefik2
+    labels:
+      - helper.docker.lego.discovery.domain=foo.bar
