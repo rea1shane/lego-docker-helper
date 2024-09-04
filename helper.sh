@@ -25,7 +25,7 @@ docker_exec_by_label() {
 
     for container_name in $container_names; do
         echo -e "$purple_arrow Executing command in container: $container_name"
-        docker exec "$container_name" bash -c "$command"
+        docker exec "$container_name" sh -c "$command"
     done
 
     echo -e "$green_arrow Done"
