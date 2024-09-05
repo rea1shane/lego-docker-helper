@@ -26,15 +26,17 @@ Then, write your own hook script, like this:
 
 source /helper.sh
 
+# example.com
 if [ "$LEGO_CERT_DOMAIN" = "example.com" ]; then
-  docker_copy_by_label helper.docker.lego.discovery.domain=example.com "$LEGO_CERT_PATH" /etc/postfix/certificates
-  docker_copy_by_label helper.docker.lego.discovery.domain=example.com "$LEGO_CERT_KEY_PATH" /etc/postfix/certificates
+  nginx_cert_dir="/etc/nginx/certificates"
+  docker_copy_by_label helper.docker.lego.discovery.domain=example.com "$LEGO_CERT_PATH" "$nginx_cert_dir"
+  docker_copy_by_label helper.docker.lego.discovery.domain=example.com "$LEGO_CERT_KEY_PATH" "$nginx_cert_dir"
   docker_exec_by_label helper.docker.lego.discovery.domain=example.com "nginx -s reload"
-fi
-
-if [ "$LEGO_CERT_DOMAIN" = "foo.bar" ]; then
-  docker_copy_by_label helper.docker.lego.discovery.domain=foo.bar "$LEGO_CERT_PATH" /certificates
-  docker_copy_by_label helper.docker.lego.discovery.domain=foo.bar "$LEGO_CERT_KEY_PATH" /certificates
+# foo.bar
+elif [ "$LEGO_CERT_DOMAIN" = "foo.bar" ]; then
+  default_cert_dir="/certificates"
+  docker_copy_by_label helper.docker.lego.discovery.domain=foo.bar "$LEGO_CERT_PATH" "$default_cert_dir"
+  docker_copy_by_label helper.docker.lego.discovery.domain=foo.bar "$LEGO_CERT_KEY_PATH" "$default_cert_dir"
   docker_restart_by_label helper.docker.lego.discovery.domain=foo.bar
 fi
 ```
