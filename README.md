@@ -18,4 +18,25 @@ First, Mount `docker.sock` with `rw` permission to lego-docker-helper container,
 
 Second, Add labels to target containers, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L12).
 
-Finally, do everything else as use Lego before.
+Then, write your own hook script, like this:
+
+```shell
+#!/bin/bash
+# reference: https://go-acme.github.io/lego/usage/cli/obtain-a-certificate/index.html
+
+source /helper.sh
+
+if [ "$LEGO_CERT_DOMAIN" = "example.com" ]; then
+  docker_copy_by_label helper.docker.lego.discovery.domain=example.com "$LEGO_CERT_PATH" /etc/postfix/certificates
+  docker_copy_by_label helper.docker.lego.discovery.domain=example.com "$LEGO_CERT_KEY_PATH" /etc/postfix/certificates
+  docker_exec_by_label helper.docker.lego.discovery.domain=example.com "nginx -s reload"
+fi
+
+if [ "$LEGO_CERT_DOMAIN" = "foo.bar" ]; then
+  docker_copy_by_label helper.docker.lego.discovery.domain=foo.bar "$LEGO_CERT_PATH" /certificates
+  docker_copy_by_label helper.docker.lego.discovery.domain=foo.bar "$LEGO_CERT_KEY_PATH" /certificates
+  docker_restart_by_label helper.docker.lego.discovery.domain=foo.bar
+fi
+```
+
+Finally, do anything else as you did before with Lego.
