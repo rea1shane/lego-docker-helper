@@ -1,24 +1,24 @@
 services:
   daemon:
     image: rea1shane/lego-docker-helper
-    container_name: example-lego-docker-helper
+    container_name: demo-lego-docker-helper
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:rw
 
   nginx:
     image: nginx
-    container_name: example-nginx
+    container_name: demo-nginx
     labels:
       - helper.docker.lego.discovery.domain=example.com
 
   traefik:
     image: traefik
-    container_name: example-traefik
+    container_name: demo-traefik
     labels:
       - helper.docker.lego.discovery.domain=foo.bar
 
   traefik2:
     image: traefik
-    container_name: example-traefik2
+    container_name: demo-traefik2
     labels:
       - helper.docker.lego.discovery.domain=foo.bar
