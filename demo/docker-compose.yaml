@@ -7,18 +7,10 @@ services:
 
   nginx:
     image: nginx
-    container_name: demo-nginx
     labels:
       - helper.docker.lego.discovery.domain=example.com
 
   traefik:
     image: traefik
-    container_name: demo-traefik
-    labels:
-      - helper.docker.lego.discovery.domain=foo.bar
-
-  traefik2:
-    image: traefik
-    container_name: demo-traefik2
     labels:
       - helper.docker.lego.discovery.domain=foo.bar

@@ -3,7 +3,7 @@
 First run this Docker Compose:
 
 ```shell
-docker compose up -d
+docker compose up -d --scale nginx=3 --scale traefik=3
 ```
 
 Then enter the `demo-lego-docker-helper` container:

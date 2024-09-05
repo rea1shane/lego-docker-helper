@@ -16,7 +16,7 @@ Features:
 
 First, Mount `docker.sock` with `rw` permission to lego-docker-helper container, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L6).
 
-Second, Add labels to target containers, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L12).
+Second, Add labels to target containers, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L11).
 
 Then, write your own hook script, like this:
 
