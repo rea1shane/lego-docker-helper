@@ -1,6 +1,6 @@
 # [Lego](https://github.com/go-acme/lego) Docker helper
 
-Use Docker label to determine which certificates should be deployed to which containers and deploy them via the Docker client.
+Use Docker label to determine which certs should be deployed to which containers and deploy them via the Docker client.
 
 No changes were made other than installing `docker-cli` and [`helper.sh`](https://github.com/rea1shane/lego-docker-helper/blob/main/helper.sh) on the original image. See [Dockerfile](https://github.com/rea1shane/lego-docker-helper/blob/main/Dockerfile).
 
