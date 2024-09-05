@@ -1,7 +1,0 @@
-services:
-  daemon:
-    image: rea1shane/lego-docker-helper:$LEGO_TAG
-    container_name: lego-docker-helper
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:rw
-    restart: unless-stopped
