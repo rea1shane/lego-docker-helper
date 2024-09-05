@@ -1,4 +1,18 @@
-NEED load script first:
+# Lego Docker helper demo
+
+First run this Docker Compose:
+
+```shell
+docker compose up -d
+```
+
+Then enter the `demo-lego-docker-helper` container:
+
+```shell
+docker exec -it demo-lego-docker-helper /bin/sh
+```
+
+Need source script first to use helper functions:
 
 ```shell
 source /helper.sh
