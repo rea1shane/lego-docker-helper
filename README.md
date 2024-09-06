@@ -12,6 +12,10 @@ Features:
   - Execute command in containers with specified Docker label.
   - Restart containers with specified Docker label.
 
+> [!TIP]
+>
+> Edit cron jobs via `crontab -e`.
+
 ## Usage
 
 First, Mount `docker.sock` with `rw` permission to lego-docker-helper container, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L6).
