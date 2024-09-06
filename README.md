@@ -31,17 +31,40 @@ Then, write your own hook script, like this:
 source /helper.sh
 
 if [ "$LEGO_CERT_DOMAIN" = "example.com" ]; then
-  nginx_cert_dir="/etc/nginx/certificates"
-  docker_copy_by_label helper.docker.lego.discovery.domain=example.com "$LEGO_CERT_PATH" "$nginx_cert_dir"
-  docker_copy_by_label helper.docker.lego.discovery.domain=example.com "$LEGO_CERT_KEY_PATH" "$nginx_cert_dir"
-  docker_exec_by_label helper.docker.lego.discovery.domain=example.com "nginx -s reload"
+    nginx_cert_dir="/etc/nginx/certificates"
+    docker_copy_by_label helper.docker.lego.discovery.domain=example.com "$LEGO_CERT_PATH" "$nginx_cert_dir"
+    docker_copy_by_label helper.docker.lego.discovery.domain=example.com "$LEGO_CERT_KEY_PATH" "$nginx_cert_dir"
+    docker_exec_by_label helper.docker.lego.discovery.domain=example.com "nginx -s reload"
 
 elif [ "$LEGO_CERT_DOMAIN" = "foo.bar" ]; then
-  default_cert_dir="/certificates"
-  docker_copy_by_label helper.docker.lego.discovery.domain=foo.bar "$LEGO_CERT_PATH" "$default_cert_dir"
-  docker_copy_by_label helper.docker.lego.discovery.domain=foo.bar "$LEGO_CERT_KEY_PATH" "$default_cert_dir"
-  docker_restart_by_label helper.docker.lego.discovery.domain=foo.bar
+    default_cert_dir="/certificates"
+    docker_copy_by_label helper.docker.lego.discovery.domain=foo.bar "$LEGO_CERT_PATH" "$default_cert_dir"
+    docker_copy_by_label helper.docker.lego.discovery.domain=foo.bar "$LEGO_CERT_KEY_PATH" "$default_cert_dir"
+    docker_restart_by_label helper.docker.lego.discovery.domain=foo.bar
 
+fi
+```
+
+Or set different behaviors for different components:
+
+```shell
+#!/bin/bash
+
+source /helper.sh
+
+domain="example.com"
+cert_dir="/certificates"
+
+if [ "$LEGO_CERT_DOMAIN" = "$domain" ]; then
+    # adguardhome
+    docker_copy_by_label "helper.docker.lego.discovery.id=$domain:adguardhome" "$LEGO_CERT_PATH" "$cert_dir"
+    docker_copy_by_label "helper.docker.lego.discovery.id=$domain:adguardhome" "$LEGO_CERT_KEY_PATH" "$cert_dir"
+    docker_exec_by_label "helper.docker.lego.discovery.id=$domain:adguardhome" "/opt/adguardhome/AdGuardHome -s reload"
+
+    # traefik
+    docker_copy_by_label "helper.docker.lego.discovery.id=$domain:traefik" "$LEGO_CERT_PATH" "$cert_dir"
+    docker_copy_by_label "helper.docker.lego.discovery.id=$domain:traefik" "$LEGO_CERT_KEY_PATH" "$cert_dir"
+    docker_restart_by_label "helper.docker.lego.discovery.id=$domain:traefik"
 fi
 ```
 
