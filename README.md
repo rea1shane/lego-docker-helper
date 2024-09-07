@@ -14,7 +14,7 @@ Features:
 
 > [!TIP]
 >
-> Edit cron jobs via `crontab -e`.
+> Edit cron jobs via `crontab -e` to ensure that `crond` can be reloaded.
 
 ## Usage
 
