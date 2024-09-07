@@ -12,6 +12,10 @@ Features:
   - Execute command in containers with specified Docker label.
   - Restart containers with specified Docker label.
 
+> [!IMPORTANT]
+>
+> The time zone inside the container is UTC, modify your cron expression according to your time zone.
+
 > [!TIP]
 >
 > Edit cron jobs via `crontab -e` to ensure that `crond` can be reloaded.
@@ -72,7 +76,3 @@ fi
 Then, up lego-docker-helper container and mount `docker.sock` in it with `rw` permission, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L6). Also don't forget to mount your hook script into the container.
 
 Finally, do anything else as you did before with Lego.
-
-> [!IMPORTANT]
->
-> The time zone inside the container is UTC, modify your cron expression according to your time zone.
