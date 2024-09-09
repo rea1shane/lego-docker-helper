@@ -1,0 +1,22 @@
+#!/bin/bash
+# reference: https://go-acme.github.io/lego/usage/cli/obtain-a-certificate/index.html#use-case
+
+source /helper.sh
+
+if [ "$LEGO_CERT_DOMAIN" = "foo.bar" ]; then
+    docker_copy_by_label helper.docker.lego.discovery.domain=foo.bar "$LEGO_CERT_PATH" "/etc/postfix/certificates/foo.bar.crt"
+    docker_copy_by_label helper.docker.lego.discovery.domain=foo.bar "$LEGO_CERT_KEY_PATH" "/etc/postfix/certificates/foo.bar.key"
+    docker_restart_by_label helper.docker.lego.discovery.domain=foo.bar
+
+elif [ "$LEGO_CERT_DOMAIN" = "example.com" ]; then
+    docker_exec_by_label "helper.docker.lego.discovery.id=example.com:nginx" "mkdir -p /path/to/certificates"
+    docker_copy_by_label "helper.docker.lego.discovery.id=example.com:nginx" "$LEGO_CERT_PATH" "/path/to/certificates/chain.crt"
+    docker_copy_by_label "helper.docker.lego.discovery.id=example.com:nginx" "$LEGO_CERT_KEY_PATH" "/path/to/certificates/private.key"
+    docker_exec_by_label "helper.docker.lego.discovery.id=example.com:nginx" "nginx -s reload"
+
+    docker_exec_by_label "helper.docker.lego.discovery.id=example.com:traefik" "mkdir -p /path/to/certificates"
+    docker_copy_by_label "helper.docker.lego.discovery.id=example.com:traefik" "$LEGO_CERT_PATH" "/path/to/certificates/chain.crt"
+    docker_copy_by_label "helper.docker.lego.discovery.id=example.com:traefik" "$LEGO_CERT_KEY_PATH" "/path/to/certificates/private.key"
+    docker_restart_by_label "helper.docker.lego.discovery.id=example.com:traefik"
+
+fi
