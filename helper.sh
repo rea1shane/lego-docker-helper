@@ -1,86 +1,137 @@
-red_arrow="\033[31m==>\033[0m"
-yellow_arrow="\033[33m==>\033[0m"
-green_arrow="\033[32m==>\033[0m"
-blue_arrow="\033[36m==>\033[0m"
-purple_arrow="\033[35m==>\033[0m"
-
 docker_exec_by_label() {
     if [ "$#" -ne 2 ]; then
-        echo -e "$red_arrow Usage: docker_exec_by_label <label> <command>"
+        log_error "Usage: docker_exec_by_label <label> <command>"
         return 1
     fi
 
     local label=$1
     local command=$2
-    echo -e "$blue_arrow Docker exec command by label"
-    echo -e "$blue_arrow Label: $label"
-    echo -e "$blue_arrow Command: $command"
+    echo "========"
+    echo "Action: exec"
+    echo "Label:  $label"
+    echo "Cmd:    $command"
+    echo "========"
 
     local container_names=$(docker ps --filter "label=$label" --format "{{.Names}}")
 
     if [ -z "$container_names" ]; then
-        echo -e "$yellow_arrow No running containers found with label $label"
+        no_running_containers
         return 1
     fi
 
     for container_name in $container_names; do
-        echo -e "$purple_arrow Executing command in container: $container_name"
-        docker exec "$container_name" sh -c "$command"
+        log_doing "Executing command in container: $container_name"
+        output=$(docker exec "$container_name" sh -c "$command" 2>&1)
+        deal_result $? "$output"
     done
 
-    echo -e "$green_arrow Done"
+    completed
 }
 
 docker_copy_by_label() {
     if [ "$#" -ne 3 ]; then
-        echo -e "$red_arrow Usage: docker_copy_by_label <label> <source_path> <destination_path>"
+        log_error "Usage: docker_copy_by_label <label> <source_path> <destination_path>"
         return 1
     fi
 
     local label=$1
     local source_path=$2
     local destination_path=$3
-    echo -e "$blue_arrow Docker copy file by label"
-    echo -e "$blue_arrow Label: $label"
-    echo -e "$blue_arrow Source path: $source_path"
-    echo -e "$blue_arrow Destination path: $destination_path"
+    echo "========"
+    echo "Action: copy"
+    echo "Label:  $label"
+    echo "Src:    $source_path"
+    echo "Dest:   $destination_path"
+    echo "========"
 
     local container_names=$(docker ps --filter "label=$label" --format "{{.Names}}")
 
     if [ -z "$container_names" ]; then
-        echo -e "$yellow_arrow No running containers found with label $label"
+        no_running_containers
         return 1
     fi
 
     for container_name in $container_names; do
-        echo -e "$purple_arrow Copying $source_path to container $container_name:$destination_path"
-        docker cp "$source_path" "$container_name:$destination_path"
+        log_doing "Copying $source_path to container $container_name:$destination_path"
+        output=$(docker cp "$source_path" "$container_name:$destination_path" 2>&1)
+        deal_result $? "$output"
     done
 
-    echo -e "$green_arrow Done"
+    completed
 }
 
 docker_restart_by_label() {
     if [ "$#" -ne 1 ]; then
-        echo -e "$red_arrow Usage: docker_restart_by_label <label>"
+        log_error "Usage: docker_restart_by_label <label>"
         return 1
     fi
 
     local label=$1
-    echo -e "$blue_arrow Docker restart by label"
-    echo -e "$blue_arrow Label: $label"
+    echo "========"
+    echo "Action: restart"
+    echo "Label:  $label"
+    echo "========"
 
     local container_names=$(docker ps --filter "label=$label" --format "{{.Names}}")
 
     if [ -z "$container_names" ]; then
-        echo -e "$yellow_arrow No running containers found with label $label"
+        no_running_containers
         return 1
     fi
 
     for container_name in $container_names; do
-        echo -e "$purple_arrow Restarting container: $container_name"
-        docker restart "$container_name"
+        log_doing "Restarting container: $container_name"
+        output=$(docker restart "$container_name" 2>&1)
+        deal_result $? "$output"
     done
 
-    echo -e "$green_arrow Done"
+    completed
+}
+
+#########
+# Utils #
+#########
+
+no_running_containers() {
+    log_warning "No running containers found with label $label"
+}
+
+deal_result() {
+    local code=$1
+    local output=$2
+    if [ $code -eq 0 ]; then
+        log_success "OK"
+    else
+        log_error "ERROR:"
+        echo "$output" | sed 's/^/    /'
+    fi
+}
+
+completed() {
+    log_finish "All tasks have been completed"
+}
+
+log_error() {
+    local arrow="\033[31m==>\033[0m"
+    echo -e "$arrow $@"
+}
+
+log_warning() {
+    local arrow="\033[33m==>\033[0m"
+    echo -e "$arrow $@"
+}
+
+log_doing() {
+    local arrow="\033[36m==>\033[0m"
+    echo -e "$arrow $@"
+}
+
+log_success() {
+    local arrow="\033[32m==>\033[0m"
+    echo -e "$arrow $@"
+}
+
+log_finish() {
+    local arrow="\033[35m==>\033[0m"
+    echo -e "$arrow $@"
 }
