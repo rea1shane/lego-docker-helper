@@ -18,7 +18,7 @@ First, adding labels to containers where certs need to be deployed, like [this](
 
 Second, make your own hook script, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/hook.sh.example).
 
-Then, up lego-docker-helper container and mount `docker.sock` in it with `rw` permission, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L6). Also don't forget to mount your hook script into the container.
+Then, up `lego-docker-helper` container and mount `docker.sock` in it with `rw` permission, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L6). Also don't forget to mount your hook script into the container.
 
 > [!IMPORTANT]
 >
