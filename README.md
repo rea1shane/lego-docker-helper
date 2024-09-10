@@ -12,14 +12,6 @@ Features:
   - Execute command in containers with specified Docker label.
   - Restart containers with specified Docker label.
 
-> [!IMPORTANT]
->
-> The time zone inside the container is UTC, modify your cron expression according to your time zone.
-
-> [!TIP]
->
-> Edit cron jobs via `crontab -e` to ensure that `crond` can be reloaded.
-
 ## Usage
 
 First, adding labels to containers where certs need to be deployed, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L11). Then down and up containers to make labels take effect.
@@ -28,4 +20,12 @@ Second, make your own hook script, like [this](https://github.com/rea1shane/lego
 
 Then, up lego-docker-helper container and mount `docker.sock` in it with `rw` permission, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L6). Also don't forget to mount your hook script into the container.
 
+> [!IMPORTANT]
+>
+> By default, container use UTC. To set cron expressions by local time, specify your time zone with the environment variable `TZ` when start the container. See [list with all the timezones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List).
+
 Finally, do anything else as you did before with Lego.
+
+> [!TIP]
+>
+> Edit cron jobs via `crontab -e` to ensure that `crond` can be reloaded.
