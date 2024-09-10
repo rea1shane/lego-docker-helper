@@ -22,9 +22,9 @@ Features:
 
 ## Usage
 
-First, adding labels to containers where certs need to be deployed, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L11). Down and up them to make labels effect.
+First, adding labels to containers where certs need to be deployed, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L11). Then down and up containers to make labels take effect.
 
-Second, write your own hook script, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/hook.sh.example).
+Second, make your own hook script, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/hook.sh.example).
 
 Then, up lego-docker-helper container and mount `docker.sock` in it with `rw` permission, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L6). Also don't forget to mount your hook script into the container.
 
