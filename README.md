@@ -8,9 +8,9 @@ Features:
 
 - Use `crond` as daemon.
 - Provide some useful functions ([demo](https://github.com/rea1shane/lego-docker-helper/tree/main/demo)):
-  - Copy certs to containers with specified Docker label.
-  - Execute command in containers with specified Docker label.
-  - Restart containers with specified Docker label.
+  - `docker_copy_by_label`: Copy certs to containers with specified Docker label.
+  - `docker_exec_by_label`: Execute command in containers with specified Docker label.
+  - `docker_restart_by_label`: Restart containers with specified Docker label.
 
 ## Usage
 
