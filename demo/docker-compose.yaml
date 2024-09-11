@@ -2,6 +2,8 @@ services:
   daemon:
     image: rea1shane/lego-docker-helper
     container_name: demo-lego-docker-helper
+    environment:
+      - TZ=Asia/Shanghai
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:rw
       - ./test.sh:/test.sh
