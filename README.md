@@ -14,7 +14,7 @@ Features:
 
 ## Usage
 
-First, adding labels to containers where certs need to be deployed, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L11). Then down and up containers to make labels take effect.
+First, adding labels to containers where certs need to be deployed, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L12). Then down and up containers to make labels take effect.
 
 Second, make your own hook script, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/hook.sh.example).
 

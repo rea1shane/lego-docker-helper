@@ -4,6 +4,7 @@ services:
     container_name: demo-lego-docker-helper
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:rw
+      - ./test.sh:/test.sh
 
   nginx:
     image: nginx
