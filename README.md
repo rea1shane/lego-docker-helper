@@ -29,22 +29,3 @@ Finally, do anything else as you did before with Lego.
 > [!TIP]
 >
 > Edit cron jobs via `crontab -e` to ensure that `crond` can be reloaded.
-
-## Redeploy certificates
-
-If for some reason, e.g. you redeployed the target container, or deployed the target container after obtaining/renewing the certificate, and you want to redeploy the certificate, just run the hook script manually.
-
-Before running the hook script, you need to set some environment variables like Lego, for example:
-
-```shell
-export DOMAIN=example.com
-
-# cd to the working directory with .lego
-cd /path/to/working-dir
-export LEGO_CERT_DOMAIN=$DOMAIN
-export LEGO_CERT_PATH="$(pwd)/.lego/certificates/$DOMAIN.crt"
-export LEGO_CERT_KEY_PATH="$(pwd)/.lego/certificates/$DOMAIN.key"
-
-# run your hook script
-sh /path/to/hook.sh
-```
