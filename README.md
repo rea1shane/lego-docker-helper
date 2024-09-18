@@ -1,6 +1,6 @@
 # [Lego](https://github.com/go-acme/lego) Docker helper
 
-Use Docker label to determine which certs should be deployed to which containers and deploy them via the Docker client.
+Use Docker label to determine which certificates should be deployed to which containers and deploy them via the Docker client.
 
 No changes were made other than installing `docker-cli` and [`helper.sh`](https://github.com/rea1shane/lego-docker-helper/blob/main/helper.sh) on the original image. See [Dockerfile](https://github.com/rea1shane/lego-docker-helper/blob/main/Dockerfile).
 
@@ -8,13 +8,13 @@ Features:
 
 - Use `crond` as daemon.
 - Provide some useful functions ([demo](https://github.com/rea1shane/lego-docker-helper/tree/main/demo)):
-  - `docker_copy_by_label`: Copy certs to containers with specified Docker label.
+  - `docker_copy_by_label`: Copy certificates to containers with specified Docker label.
   - `docker_exec_by_label`: Execute command in containers with specified Docker label.
   - `docker_restart_by_label`: Restart containers with specified Docker label.
 
 ## Usage
 
-First, adding labels to containers where certs need to be deployed, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L14). Then down and up containers to make labels take effect.
+First, adding labels to containers where certificates need to be deployed, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/demo/docker-compose.yaml#L14). Then down and up containers to make labels take effect.
 
 Second, make your own hook script, like [this](https://github.com/rea1shane/lego-docker-helper/blob/main/hook.sh.example).
 
