@@ -1,10 +1,11 @@
 #!/bin/bash
 
-echo "Filtering containers with label(s):"
+echo "Filtering containers with labels:"
 echo ""
 echo "    helper.docker.lego.email=$LEGO_ACCOUNT_EMAIL"
 echo "    helper.docker.lego.domain=$LEGO_CERT_DOMAIN"
 echo ""
+echo "Note: Container can no labled helper.docker.lego.email, but if it does, the value must be $LEGO_ACCOUNT_EMAIL to be processed."
 
 containers=$(docker ps --filter "label=helper.docker.lego.enable=true" --filter "label=helper.docker.lego.domain=$LEGO_CERT_DOMAIN" --format "{{.ID}}")
 
@@ -22,10 +23,9 @@ for container in $containers; do
     echo "======"
 
     #TODO FINISH IT
-
-    echo "======"
 done
 
+echo "======"
 echo "Completed. Success: $success_count/$matched_count"
 
 # ----------------------------------------------------------------------------
