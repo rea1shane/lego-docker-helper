@@ -30,8 +30,9 @@ docker_restart() {
 #########
 
 deal_result() {
-    local code=$1
-    local output=$2
+    local code="$1"
+    local output="$2"
+
     if [ $code -eq 0 ]; then
         log_success "OK"
     else
