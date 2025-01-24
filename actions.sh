@@ -46,11 +46,6 @@ log_error() {
     echo -e "$arrow $@"
 }
 
-log_warning() {
-    local arrow="\033[33m==>\033[0m"
-    echo -e "$arrow $@"
-}
-
 log_info() {
     local arrow="\033[36m==>\033[0m"
     echo -e "$arrow $@"
