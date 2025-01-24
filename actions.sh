@@ -3,8 +3,17 @@ docker_copy() {
     local container="$2"
     local destination_path="$3"
 
-    log_doing "Copying $source_path to $container:$destination_path"
+    log_info "Copying $source_path to $container:$destination_path"
     output=$(docker cp "$source_path" "$container:$destination_path" 2>&1)
+    deal_result $? "$output"
+}
+
+docker_exec_by_label() {
+    local container="$1"
+    local command="$2"
+
+    log_info "Executing in $container, command: $command"
+    output=$(docker exec "$container" sh -c "$command" 2>&1)
     deal_result $? "$output"
 }
 
@@ -33,17 +42,12 @@ log_warning() {
     echo -e "$arrow $@"
 }
 
-log_doing() {
+log_info() {
     local arrow="\033[36m==>\033[0m"
     echo -e "$arrow $@"
 }
 
 log_success() {
     local arrow="\033[32m==>\033[0m"
-    echo -e "$arrow $@"
-}
-
-log_finish() {
-    local arrow="\033[35m==>\033[0m"
     echo -e "$arrow $@"
 }
