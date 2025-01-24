@@ -1,11 +1,15 @@
 #!/bin/bash
 
-echo "Filtering containers labeled with label=helper.docker.lego.domain=$LEGO_CERT_DOMAIN"
+echo "Filtering containers with label(s):"
+echo ""
+echo "    helper.docker.lego.email=$LEGO_ACCOUNT_EMAIL"
+echo "    helper.docker.lego.domain=$LEGO_CERT_DOMAIN"
+echo ""
 
 containers=$(docker ps --filter "label=helper.docker.lego.enable=true" --filter "label=helper.docker.lego.domain=$LEGO_CERT_DOMAIN" --format "{{.ID}}")
 
 matched_count=0
-successed_count=0
+success_count=0
 
 for container in $containers; do
     email=$(docker inspect -f '{{index .Config.Labels "helper.docker.lego.email"}}' "$container")
@@ -22,7 +26,7 @@ for container in $containers; do
     echo "======"
 done
 
-echo "Successed: $successed_count/$matched_count"
+echo "Completed. Success: $success_count/$matched_count"
 
 # ----------------------------------------------------------------------------
 
