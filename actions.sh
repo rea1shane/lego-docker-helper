@@ -3,7 +3,7 @@ docker_copy() {
     local container="$2"
     local destination_path="$3"
 
-    log_info "Copying $source_path to $container:$destination_path"
+    log_info "Copying file $source_path to $container:$destination_path"
     output=$(docker cp "$source_path" "$container:$destination_path" 2>&1)
     deal_result $? "$output"
 }
@@ -12,7 +12,7 @@ docker_exec_by_label() {
     local container="$1"
     local command="$2"
 
-    log_info "Executing in $container, command: $command"
+    log_info "Executing command in $container. Command: $command"
     output=$(docker exec "$container" sh -c "$command" 2>&1)
     deal_result $? "$output"
 }
@@ -20,7 +20,7 @@ docker_exec_by_label() {
 docker_restart() {
     local container="$1"
 
-    log_info "Restarting $container"
+    log_info "Restarting container $container"
     output=$(docker restart "$container" 2>&1)
     deal_result $? "$output"
 }
