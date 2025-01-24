@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Filtering containers labeled with label=helper.docker.lego.domain=$LEGO_CERT_DOMAIN"
+
 containers=$(docker ps --filter "label=helper.docker.lego.enable=true" --filter "label=helper.docker.lego.domain=$LEGO_CERT_DOMAIN" --format "{{.ID}}")
 
 matched_count=0
@@ -20,9 +22,6 @@ for container in $containers; do
     echo "======"
 done
 
-echo "Result"
-echo "Email:     $LEGO_ACCOUNT_EMAIL"
-echo "Domain:    $LEGO_CERT_DOMAIN"
 echo "Successed: $successed_count/$matched_count"
 
 # ----------------------------------------------------------------------------
