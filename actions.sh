@@ -17,6 +17,14 @@ docker_exec_by_label() {
     deal_result $? "$output"
 }
 
+docker_restart() {
+    local container="$1"
+
+    log_info "Restarting $container"
+    output=$(docker restart "$container" 2>&1)
+    deal_result $? "$output"
+}
+
 #########
 # Utils #
 #########
