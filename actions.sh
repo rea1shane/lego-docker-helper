@@ -12,7 +12,7 @@ docker_exec_by_label() {
     local container="$1"
     local command="$2"
 
-    log_info "Executing command in $container. Command: $command"
+    log_info "Executing command in container $container. Command: $command"
     output=$(docker exec "$container" sh -c "$command" 2>&1)
     deal_result $? "$output"
 }
