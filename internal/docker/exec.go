@@ -34,13 +34,13 @@ func exec(ctx context.Context, cli *client.Client, containerID string, cmd []str
 		return "", "", fmt.Errorf("failed to read exec output: %v", err)
 	}
 
-	inspectResponse, err := cli.ContainerExecInspect(ctx, id.ID)
+	inspect, err := cli.ContainerExecInspect(ctx, id.ID)
 	if err != nil {
 		return "", "", fmt.Errorf("failed to inspect exec: %v", err)
 	}
 
-	if inspectResponse.ExitCode != 0 {
-		err = fmt.Errorf("command exited with code %d", inspectResponse.ExitCode)
+	if inspect.ExitCode != 0 {
+		err = fmt.Errorf("command exited with code %d", inspect.ExitCode)
 	}
 	stdout = stdoutBuffer.String()
 	stderr = stderrBuffer.String()
