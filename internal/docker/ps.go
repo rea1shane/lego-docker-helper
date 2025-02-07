@@ -9,7 +9,7 @@ import (
 	"github.com/docker/docker/client"
 )
 
-func ps(ctx context.Context, cli *client.Client, all bool, labels ...string) ([]types.Container, error) {
+func ListContainers(ctx context.Context, cli *client.Client, all bool, labels ...string) ([]types.Container, error) {
 	var labelArgs []filters.KeyValuePair
 	for _, label := range labels {
 		labelArgs = append(labelArgs, filters.Arg("label", label))

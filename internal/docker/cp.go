@@ -9,7 +9,7 @@ import (
 	"github.com/docker/docker/client"
 )
 
-func cp(ctx context.Context, cli *client.Client, containerID, destinationPath, sourcePath string) error {
+func CopyToContainer(ctx context.Context, cli *client.Client, containerID, destinationPath, sourcePath string) error {
 	sourceFile, err := os.Open(sourcePath)
 	if err != nil {
 		return fmt.Errorf("failed to open source file: %v", err)

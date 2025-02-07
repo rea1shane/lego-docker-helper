@@ -7,6 +7,6 @@ import (
 	"github.com/docker/docker/client"
 )
 
-func restart(ctx context.Context, cli *client.Client, containerID string) error {
+func RestartContainer(ctx context.Context, cli *client.Client, containerID string) error {
 	return cli.ContainerRestart(ctx, containerID, container.StopOptions{})
 }

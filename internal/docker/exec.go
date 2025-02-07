@@ -10,7 +10,7 @@ import (
 	"github.com/docker/docker/pkg/stdcopy"
 )
 
-func exec(ctx context.Context, cli *client.Client, containerID string, cmd []string) (stdout, stderr string, err error) {
+func ExecInContainer(ctx context.Context, cli *client.Client, containerID string, cmd []string) (stdout, stderr string, err error) {
 	config := container.ExecOptions{
 		Cmd:          cmd,
 		AttachStdout: true,
