@@ -7,3 +7,7 @@ import (
 func NewClient() (*client.Client, error) {
 	return client.NewClientWithOpts(client.FromEnv)
 }
+
+func CloseClient(cli *client.Client) {
+	cli.Close()
+}
